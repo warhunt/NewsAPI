@@ -1,0 +1,382 @@
+openapi: 3.0.0
+info:
+  description: This is a sample News server
+  version: 1.0.0
+  title: News API
+tags:
+  - name: news
+    description: Everything about news
+paths:
+  /news:
+    post:
+      tags:
+        - news
+      summary: Create news
+      description: ''
+      operationId: app.news.funcs.create_news
+      requestBody:
+        $ref: '#/components/requestBodies/newsBody'
+      responses:
+        '201':
+          description: News is created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  error:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: "News is added. Id: {news_id}"
+        '400':
+          $ref: '#/components/responses/commonError'
+    get:
+      tags:
+        - news
+      summary: Get all news with sort
+      description: ''
+      operationId: app.news.funcs.get_all_news
+      parameters:
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/DateFrom"
+        - $ref: "#/components/parameters/DateTo"
+        - $ref: "#/components/parameters/Count"
+        - $ref: "#/components/parameters/Page"
+      responses:
+        '200':
+          description: News is created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/News'
+                  error:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: ""
+        '400':
+          $ref: '#/components/responses/commonError'
+        '404':
+          $ref: '#/components/responses/notFoundBySort'
+    delete:
+      tags:
+        - news
+      summary: Delete all news with sort
+      description: ''
+      operationId: app.news.funcs.delete_all_news
+      parameters:
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/DateFrom"
+        - $ref: "#/components/parameters/DateTo"
+        - $ref: "#/components/parameters/Count"
+        - $ref: "#/components/parameters/Page"
+      responses:
+        '204':
+          description: News is deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  error:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: "News is deleted. Total deleted {number of news} news"
+        '400':
+          $ref: '#/components/responses/commonError'
+        '404':
+          $ref: '#/components/responses/notFoundBySort'
+                    
+  /news/{news_id}:
+    get:
+      tags:
+        - news
+      summary: Get news by news_id
+      description: ''
+      operationId: app.news.funcs.get_news
+      parameters:
+        - $ref: '#/components/parameters/news_id'
+      responses:
+        '200':
+          description: News is created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    $ref: '#/components/schemas/News'
+                  error:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: ""
+        '400':
+          $ref: '#/components/responses/commonError'
+        '404':
+          $ref: '#/components/responses/notFoundByID'
+    delete:
+      tags:
+        - news
+      summary: Delete news by news_id
+      description: ''
+      operationId: app.news.funcs.delete_news
+      parameters:
+        - $ref: '#/components/parameters/news_id'
+      responses:
+        '204':
+          description: News is deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    $ref: '#/components/schemas/News'
+                  error:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: "News with id: {id} is deleted"
+        '400':
+          $ref: '#/components/responses/commonError'
+        '404':
+          $ref: '#/components/responses/notFoundByID'
+    put:
+      tags:
+        - news
+      summary: Update news by news_id
+      description: ''
+      operationId: app.news.funcs.update_news
+      parameters:
+        - $ref: '#/components/parameters/news_id'
+      responses:
+        '204':
+          description: News is updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    example: null
+                    nullable: true
+                  error:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: "News with id: {id} is updated by: {body}"
+        '400':
+          $ref: '#/components/responses/commonError'
+        '404':
+          $ref: '#/components/responses/notFoundByID'
+  /news/statistic/:
+    get:
+      tags:
+        - news
+      summary: Get statistics of API
+      description: ''
+      operationId: app.news.funcs.get_news_statistic
+      responses:
+        '200':
+          description: News is updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    $ref: '#/components/schemas/Statistics'
+                  error:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: ""
+        '400':
+          $ref: '#/components/responses/commonError'
+components:
+  responses:
+    commonError:
+      description: Some error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                example: null
+                nullable: true
+              error:
+                type: integer
+                example: 1
+              message:
+                type: string
+                example: "{Error text}"
+    notFoundByID:
+      description: News with id not founded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                example: null
+                nullable: true
+              error:
+                type: integer
+                example: 0
+              message:
+                type: string
+                example: "News with id: {id} is not exist"
+    notFoundBySort:
+      description: News with sort not founded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                example: []
+                nullable: true
+                items:
+                  type: object
+                  $ref: '#/components/schemas/News'
+              error:
+                type: integer
+                example: 0
+              message:
+                type: string
+                example: "News with sort: {sort} is not exist"
+  requestBodies:
+    newsBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/News'
+  parameters:
+    Count:
+      in: query
+      name: Count
+      description: Number of news per page
+      style: form
+      explode: true
+      schema:
+        type: integer
+    Page:
+      in: query
+      name: Page
+      description: News page
+      schema:
+        type: integer
+    From:
+      in: query
+      name: From
+      description: Where did the news come from
+      schema:
+        type: string
+    To:
+      in: query
+      name: To
+      description: To whom news
+      schema:
+        type: string
+    DateFrom:
+      in: query
+      name: DateFrom
+      description: News from what date (year-month-day)
+      schema:
+        type: string
+        pattern: '^\d{4}-\d{2}-\d{2}$'
+    DateTo:
+      in: query
+      name: DateTo
+      description: News until what date (year-month-day)
+      schema:
+        type: string
+        pattern: '^\d{4}-\d{2}-\d{2}$'
+    news_id:
+      name: news_id
+      description: News's Unique identifier
+      in: path
+      required: true
+      schema:
+        type: string
+        example: "61543ec7efe99ccb24420b24"
+  schemas:
+    News:
+      type: object
+      required:
+        - date
+        - header
+        - news_from
+        - news_to
+        - text
+        - id
+      properties:
+        date:
+          type: string
+          example: 'Wed, 17 Mar 2021 14:45:44 GMT'
+        id:
+          type: integer
+          example: 1
+          readOnly: true
+        header:
+          type: string
+          example: 'Hello everybody'
+        news_from:
+          type: string
+          example: 'ВА РБ'
+          default: 'ВА РБ'
+        news_to:
+          type: string
+          example: 'Всем' 
+          default: 'Всем' 
+        text:
+          type: array
+          items:
+            type: string
+            example: ["Эта новость доступна всем", "Как у вас дела?"]
+        link:
+          type: string
+          example: "https://www.google.com/search?q=gthtdjlxbr&oq=gthtdjlxbr&aqs=chrome..69i57.3404j0j1&sourceid=chrome&ie=UTF-8"
+    Statistics:
+      type: object
+      properties:
+        Page:
+          type: integer
+          example: 1
+        Count:
+          type: integer
+          example: 50

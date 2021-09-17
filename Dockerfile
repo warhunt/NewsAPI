@@ -1,0 +1,29 @@
+FROM python:3.9.7-alpine3.14
+
+ARG DB_NAME
+ARG BD_HOST
+ARG USER
+ARG PASSWORD
+ARG AUTHENTICATION_SOURCE
+
+ENV DB_NAME $DB_NAME
+ENV BD_HOST $BD_HOST
+ENV USER $USER
+ENV PASSWORD $PASSWORD
+ENV AUTHENTICATION_SOURCE $AUTHENTICATION_SOURCE
+
+ENV APP_SETTINGS "Prod"
+ENV LOGGER_NAME "logger"
+ENV APP_PATH "/usr/src/application"
+
+WORKDIR ${APP_PATH}
+
+RUN pip install --upgrade pip
+
+COPY ./ ${APP_PATH}
+
+RUN pip install --no-cache-dir -r ${APP_PATH}/requirements/production.txt
+
+EXPOSE 5000
+
+CMD gunicorn -w 4 --bind :5000 "app:create_app()"

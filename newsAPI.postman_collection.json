@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "b777271c-d1fb-45f4-85e0-327347b43206",
+		"name": "newsAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create news",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"header\": \"HELLO\",\r\n    \"news_from\": \"HELLO\",\r\n    \"news_to\": \"HELLO\",\r\n    \"text\": [\"HELLO\"],\r\n    \"link\": \"HELLO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{basepath}}/news/",
+					"host": [
+						"{{basepath}}"
+					],
+					"path": [
+						"news",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all news",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{basepath}}/news/",
+					"host": [
+						"{{basepath}}"
+					],
+					"path": [
+						"news",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get statistic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{basepath}}/news/statistic/",
+					"host": [
+						"{{basepath}}"
+					],
+					"path": [
+						"news",
+						"statistic",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get single news by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{basepath}}/news/61531d410a05112f0172ae9b/",
+					"host": [
+						"{{basepath}}"
+					],
+					"path": [
+						"news",
+						"61531d410a05112f0172ae9b",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete single news by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{basepath}}/news/61531d410a05112f0172ae9b/",
+					"host": [
+						"{{basepath}}"
+					],
+					"path": [
+						"news",
+						"61531d410a05112f0172ae9b",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all news",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{basepath}}/news/",
+					"host": [
+						"{{basepath}}"
+					],
+					"path": [
+						"news",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update single news by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"header\": \"HELLO\",\r\n    \"news_from\": \"HELLO\",\r\n    \"news_to\": \"GOOGDYE\",\r\n    \"text\": [\"GOODBYE\"],\r\n    \"link\": \"HELLO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{basepath}}/news/61531d410a05112f0172ae9b/",
+					"host": [
+						"{{basepath}}"
+					],
+					"path": [
+						"news",
+						"61531d410a05112f0172ae9b",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "basepath",
+			"value": "http://127.0.0.1:5000/api\n"
+		}
+	]
+}
